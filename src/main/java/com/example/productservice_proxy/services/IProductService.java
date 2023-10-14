@@ -1,5 +1,6 @@
 package com.example.productservice_proxy.services;
 
+import com.example.productservice_proxy.clients.IClientProductDto;
 import com.example.productservice_proxy.dtos.ProductDto;
 import com.example.productservice_proxy.models.Product;
 
@@ -10,9 +11,9 @@ public interface IProductService {
 
     Product getSingleProduct(Long productId);
 
-    Product addNewProduct(ProductDto productDto);
+    Product addNewProduct(IClientProductDto productDto);
 
-    String updateProduct(Long productId);
+    Product updateProduct(Long productId, Product product);
 
     String deleteProduct(Long productId);
 }

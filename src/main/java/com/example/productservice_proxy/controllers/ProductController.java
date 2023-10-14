@@ -1,11 +1,10 @@
 package com.example.productservice_proxy.controllers;
 
+import com.example.productservice_proxy.clients.IClientProductDto;
 import com.example.productservice_proxy.dtos.ProductDto;
+import com.example.productservice_proxy.models.Categories;
 import com.example.productservice_proxy.models.Product;
 import com.example.productservice_proxy.services.IProductService;
-import com.example.productservice_proxy.services.ProductService;
-import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -52,7 +51,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product productDto) {
         Product product = this.productService.addNewProduct(productDto);
         ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         return responseEntity;
@@ -64,8 +63,16 @@ public class ProductController {
     }
 
     @PatchMapping("/{productId}")
-    public String patchProduct(@PathVariable("productId") Long productId) {
-        return "Patching product";
+    public Product patchProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
+
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setCategory(new Categories());
+        product.getCategory().setName(productDto.getCategory());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        return this.productService.updateProduct(productId, product);
     }
 
     @DeleteMapping("/{productId}")
