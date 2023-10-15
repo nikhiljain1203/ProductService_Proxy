@@ -1,6 +1,7 @@
 package com.example.productservice_proxy.services;
 
 import com.example.productservice_proxy.clients.IClientProductDto;
+import com.example.productservice_proxy.clients.fakestore.client.FakeStoreClient;
 import com.example.productservice_proxy.clients.fakestore.dto.FakeStoreProductDto;
 import com.example.productservice_proxy.dtos.ProductDto;
 import com.example.productservice_proxy.models.Product;
@@ -23,8 +24,10 @@ import java.util.List;
 public class FakeStoreProductService implements IProductService {
 
     private RestTemplateBuilder restTemplateBuilder;
-    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder) {
+    private FakeStoreClient fakeStoreClient;
+    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.fakeStoreClient = fakeStoreClient;
     }
 
     private <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod, String url, @Nullable Object request,
@@ -39,15 +42,15 @@ public class FakeStoreProductService implements IProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<ProductDto[]> productDtos =
-                restTemplate
-                        .getForEntity("https://fakestoreapi.com/products", ProductDto[].class);
+//        RestTemplate restTemplate = restTemplateBuilder.build();
+//        ResponseEntity<ProductDto[]> productDtos =
+//                restTemplate
+//                        .getForEntity("https://fakestoreapi.com/products", ProductDto[].class);
+//
 
+        List<FakeStoreProductDto> fakeStoreProductDtos = fakeStoreClient.getAllProducts();        List<Product> answer = new ArrayList<>();
 
-        List<Product> answer = new ArrayList<>();
-
-        for (ProductDto productDto: productDtos.getBody()) {
+        for (FakeStoreProductDto productDto: fakeStoreProductDtos) {
             Product product = new Product();
             product.setId(productDto.getId());
             product.setTitle(productDto.getTitle());

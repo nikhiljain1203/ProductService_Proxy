@@ -45,13 +45,14 @@ public class ProductController {
             ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
             return responseEntity;
         } catch (Exception e) {
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 error code
+            //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 error code
+            throw e;
         }
     }
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody Product productDto) {
+    public ResponseEntity<Product> addNewProduct(@RequestBody IClientProductDto productDto) {
         Product product = this.productService.addNewProduct(productDto);
         ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         return responseEntity;
@@ -78,5 +79,10 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public String deleteProduct(@PathVariable("productId") Long productId) {
         return "Deleting a product with id: " + productId;
+    }
+
+    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
+    public ResponseEntity<String> handleException(Exception e) {
+        return new ResponseEntity<>("Kuch toh phat hai", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
