@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Service
 public class FakeStoreProductService implements IProductService {
 
     private RestTemplateBuilder restTemplateBuilder;
@@ -78,13 +78,18 @@ public class FakeStoreProductService implements IProductService {
         return product;
     }
 
+//    @Override
+//    public Product addNewProduct(IClientProductDto productDto) {
+//        RestTemplate restTemplate= restTemplateBuilder.build();
+//        //restTemplate.postForEntity("https://fakestoreapi.com/products", productDto, ProductDto.class);
+//        // saving the data for db
+//        Product product = getProduct((FakeStoreProductDto) productDto);
+//        return product;
+//    }
+
     @Override
-    public Product addNewProduct(IClientProductDto productDto) {
-        RestTemplate restTemplate= restTemplateBuilder.build();
-        restTemplate.postForEntity("https://fakestoreapi.com/products", productDto, ProductDto.class);
-        // saving the data for db
-        Product product = getProduct((FakeStoreProductDto) productDto);
-        return product;
+    public Product addNewProduct(Product product) {
+        return null;
     }
 
 

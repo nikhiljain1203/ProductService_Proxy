@@ -1,6 +1,7 @@
 package com.example.productservice_proxy.controllers;
 
 import com.example.productservice_proxy.clients.IClientProductDto;
+import com.example.productservice_proxy.clients.fakestore.dto.FakeStoreProductDto;
 import com.example.productservice_proxy.dtos.ProductDto;
 import com.example.productservice_proxy.models.Categories;
 import com.example.productservice_proxy.models.Product;
@@ -52,9 +53,10 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> addNewProduct(@RequestBody IClientProductDto productDto) {
-        Product product = this.productService.addNewProduct(productDto);
-        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<Product> addNewProduct(@RequestBody ProductDto productDto) {
+        Product product = getProduct(productDto);
+        Product savedproduct = this.productService.addNewProduct(product);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(savedproduct, HttpStatus.OK);
         return responseEntity;
     }
 
@@ -81,8 +83,21 @@ public class ProductController {
         return "Deleting a product with id: " + productId;
     }
 
-    @ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
+    //@ExceptionHandler({NullPointerException.class, IllegalArgumentException.class})
     public ResponseEntity<String> handleException(Exception e) {
         return new ResponseEntity<>("Kuch toh phat hai", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private Product getProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        Categories category = new Categories();
+        category.setName(productDto.getCategory());
+        product.setCategory(category);
+        product.setImageUrl(productDto.getImage());
+        product.setDescription(productDto.getDescription());
+        return product;
     }
 }
