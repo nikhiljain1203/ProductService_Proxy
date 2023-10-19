@@ -40,6 +40,26 @@ class ProductRepoTest {
     }
 
     @Test
+    //@Transactional
+    void saveProductsAndCategory2() {
+        Categories categories = new Categories();
+        categories.setName("Fashion");
+        categories.setDescription("Fashion");
+        //categories = categoryRepo.save(categories);
+
+        Product product = new Product();
+        product.setTitle("Tshirt");
+        product.setDescription("Tshirt");
+        product.setCategory(categories);
+        productRepo.save(product);
+
+        //Categories categories1 = categoryRepo.findById(categories.getId()).get();
+        //List<Product> productList = categories1.getProductList();
+        System.out.println("Debug");
+
+    }
+
+    @Test
     @Transactional
     void saveProductsAndCategory1() {
         Product product = new Product();
