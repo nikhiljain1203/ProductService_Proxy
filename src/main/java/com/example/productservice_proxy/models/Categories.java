@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -13,7 +15,8 @@ import java.util.List;
 public class Categories extends BaseModel{
     private String name;
     private String description;
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category")
+    @Fetch(FetchMode.SELECT)
     private List<Product> productList;
 }
 

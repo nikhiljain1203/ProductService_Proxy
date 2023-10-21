@@ -16,4 +16,5 @@ public class Product extends BaseModel{
     @ManyToOne(cascade= CascadeType.ALL)
     private Categories category;
     private String imageUrl;
+    private Boolean isPublic;
 }
