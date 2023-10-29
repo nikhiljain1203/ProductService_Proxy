@@ -86,11 +86,11 @@ class ProductRepoTest {
     @Rollback(value = false)
     void saveProductsAndCategory3() {
         Categories category = categoryRepo.findById(2L);
-        List<Product> productList = category.getProductList();
-        for (Product product : productList) {
-            System.out.println(product.getPrice());
-        }
-
+        //List<Product> productList = category.getProductList();
+//        for (Product product : productList) {
+//            System.out.println(product.getPrice());
+//        }
+        System.out.println("Debug");
 
 //        Product product = new Product();
 //        product.setPrice(1012);
