@@ -5,6 +5,7 @@ import com.example.productservice_proxy.clients.fakestore.dto.FakeStoreProductDt
 import com.example.productservice_proxy.dtos.ProductDto;
 import com.example.productservice_proxy.models.Categories;
 import com.example.productservice_proxy.models.Product;
+import com.example.productservice_proxy.services.FakeStoreProductService;
 import com.example.productservice_proxy.services.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

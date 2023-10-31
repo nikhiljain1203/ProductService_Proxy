@@ -36,9 +36,11 @@ class ProductControllerTest {
 
     @Test
     void test_whenGetProductIsCalled_ReturnException() {
+        // RULE
         when(productService.getSingleProduct(any(Long.class)))
                 .thenThrow(new RuntimeException("Something is wrong"));
 
-        assertThrows(RuntimeException.class, () ->productController.getSingleProduct(2l));
+        assertThrows(RuntimeException.class,
+                () -> productController.getSingleProduct(2l));
     }
 }
