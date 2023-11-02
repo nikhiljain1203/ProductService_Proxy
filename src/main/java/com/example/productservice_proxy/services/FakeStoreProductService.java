@@ -7,7 +7,9 @@ import com.example.productservice_proxy.dtos.ProductDto;
 import com.example.productservice_proxy.models.Product;
 import com.example.productservice_proxy.models.Categories;
 import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -21,10 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@Service
+@Primary
+@Service
 public class FakeStoreProductService implements IProductService {
 
     private RestTemplateBuilder restTemplateBuilder;
     private FakeStoreClient fakeStoreClient;
+
+    @Autowired
     public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
         this.restTemplateBuilder = restTemplateBuilder;
         this.fakeStoreClient = fakeStoreClient;
@@ -66,16 +72,16 @@ public class FakeStoreProductService implements IProductService {
 
 
     @Override
-    public Product getSingleProduct(Long productId) {
+    public Product getSingleProduct(Long productId ) {
 
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> productDto =
-                restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
-                        FakeStoreProductDto.class, productId);
+//        RestTemplate restTemplate = restTemplateBuilder.build();
+//        ResponseEntity<FakeStoreProductDto> productDto =
+//                restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
+//                        FakeStoreProductDto.class, productId);
+        //FakeStoreProductDto fs = fakeStoreClient.getSingleProduct(productId);
+       // Product product = getProduct(productDto.getBody());
 
-        Product product = getProduct(productDto.getBody());
-
-        return product;
+        return new Product();
     }
 
 //    @Override

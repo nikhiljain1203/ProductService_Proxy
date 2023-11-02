@@ -27,4 +27,9 @@ public class FakeStoreClient {
 
         return Arrays.asList(l.getBody());
     }
+
+    public FakeStoreProductDto getSingleProduct(Long productId) {
+        // TODO
+        return null;
+    }
 }

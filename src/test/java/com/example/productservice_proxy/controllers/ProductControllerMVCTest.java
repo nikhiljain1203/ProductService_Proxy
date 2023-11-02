@@ -18,8 +18,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.is;
+
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerMVCTest {
@@ -67,6 +68,18 @@ public class ProductControllerMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(productToCreate)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)));
+                .andExpect(content().string(objectMapper.writeValueAsString(expectedProduct)))
+                .andExpect(jsonPath("$.student.name", is("Nikhil")))
+                .andExpect(jsonPath("$.length()", is(2)));
+
     }
 }
+
+// {
+//   student: {
+//      name: ,
+//      email: ,
+//      age: ,
+//   }
+// }
+
