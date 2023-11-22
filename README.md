@@ -10,3 +10,12 @@ Assign 3
 1. Go through all of the APIs in CategoryController and ProductController
 2. Create a SelfProductService and SelfCategoryService implementing the corresponding interface
 3. Implement the code inside each of the services. This code should now work with corresponding repositories.
+
+
+User ----> Auth Server Signup 1
+User ----> Auth Server Login 2 ---> token in return 
+User ----> Resource Server (Product Service) "/products" token
+
+1) If Token Valid -> 
+   a) If role matches or not, If yes -- allow else deny
+2) If Token invalid -> deny

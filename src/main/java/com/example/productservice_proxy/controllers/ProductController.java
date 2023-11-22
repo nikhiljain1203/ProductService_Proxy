@@ -42,28 +42,27 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getSingleProduct(@Nullable @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
-                                                    @PathVariable("id") Long productId) {
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long productId) {
         try {
-            JwtObject authTokenObj = null;
-            if(authToken != null) {
-                Optional<JwtObject> authObjectOptional = tokenValidator.validateToken(authToken);
-                if(authObjectOptional.isEmpty()) {
-                    // throw exception
-                }
-                authTokenObj = authObjectOptional.get();
-            }
-            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            headers.add("Accept", "application/json");
-            headers.add("Content-Type", "application/json");
-            headers.add("auth-token", "heyaccess");
+//            JwtObject authTokenObj = null;
+//            if(authToken != null) {
+//                Optional<JwtObject> authObjectOptional = tokenValidator.validateToken(authToken);
+//                if(authObjectOptional.isEmpty()) {
+//                    // throw exception
+//                }
+//                authTokenObj = authObjectOptional.get();
+//            }
+//            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+//            headers.add("Accept", "application/json");
+//            headers.add("Content-Type", "application/json");
+//            headers.add("auth-token", "heyaccess");
             // Apply rule based user Roles
             // Product product = this.productService.getSingleProduct(productId, authTokenObj);
             Product product = this.productService.getSingleProduct(productId);
             if(productId < 1) {
                 throw new IllegalArgumentException("Something went wrong");
             }
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
+            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
             return responseEntity;
         } catch (Exception e) {
             //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
