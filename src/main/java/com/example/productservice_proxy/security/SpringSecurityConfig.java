@@ -21,11 +21,33 @@ public class SpringSecurityConfig {
             throws Exception {
 //        http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
 //                .formLogin(Customizer.withDefaults());
-        http.authorizeHttpRequests((authorize) ->
-                authorize.requestMatchers("/products").hasAuthority("admin")
-                        .anyRequest().permitAll())
-                .formLogin(Customizer.withDefaults());
+        http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/products").hasAuthority("admin")
+                                .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
 
     }
+//    @Bean
+//    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+//            throws Exception {
+//        http
+//                .authorizeHttpRequests((authorize) -> authorize
+//                        .requestMatchers("/products").hasAuthority("mentor")
+//                        .requestMatchers("/products/{id}").authenticated()
+//                        .anyRequest().permitAll()
+//                )
+//                .oauth2ResourceServer((oauth2) -> oauth2.jwt(
+//                        jwtConfigurer -> {
+//                            jwtConfigurer.jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
+//                        }
+//                ))
+//        // Form login handles the redirect to the login page from the
+//        // authorization server filter chain
+//        ;
+//
+//        return http.build();
+//    }
 }
