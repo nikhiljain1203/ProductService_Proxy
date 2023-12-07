@@ -1,6 +1,8 @@
 package com.example.productservice_proxy.repostries;
 
 import com.example.productservice_proxy.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,5 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByIdIsNotNullOrderByPrice();
 
     List<Product> findAllByIsPublicFalse();
+    Page<Product> findByTitleEquals(String title, Pageable pageable);
 }

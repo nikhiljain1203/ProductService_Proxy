@@ -24,9 +24,13 @@ public class SpringSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/products").hasAuthority("admin")
+                        .requestMatchers("/search").permitAll()
                                 .anyRequest().authenticated()
+
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+                .cors().disable()
+                .csrf().disable();
         return http.build();
 
     }
