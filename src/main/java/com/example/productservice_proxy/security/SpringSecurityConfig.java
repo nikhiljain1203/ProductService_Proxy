@@ -23,9 +23,7 @@ public class SpringSecurityConfig {
 //                .formLogin(Customizer.withDefaults());
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/products").hasAuthority("admin")
-                        .requestMatchers("/search").permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers("/*").permitAll()
 
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))

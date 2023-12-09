@@ -23,5 +23,5 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByIdIsNotNullOrderByPrice();
 
     List<Product> findAllByIsPublicFalse();
-    Page<Product> findByTitleEquals(String title, Pageable pageable);
+    List<Product> findByTitleEquals(String title, Pageable pageable);
 }

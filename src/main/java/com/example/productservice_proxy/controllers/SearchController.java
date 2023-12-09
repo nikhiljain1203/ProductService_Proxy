@@ -24,17 +24,17 @@ public class SearchController {
     }
 
     @PostMapping
-    public Page<Product> searchProducts(@RequestBody SearchRequestDto searchRequestDto) {
+    public List<ProductDto> searchProducts(@RequestBody SearchRequestDto searchRequestDto) {
+        List<Product> result = searchService.searchProducts(searchRequestDto.getQuery(),
+                searchRequestDto.getPageNumber(), searchRequestDto.getSizeOfPage(), searchRequestDto.getSortParamList());
+        List<ProductDto> shareableResult = new LinkedList<>();
+        for(Product product : result) {
+            shareableResult.add(getProduct(product));
+        }
+        return shareableResult;
 //        List<Product> result = searchService.searchProducts(searchRequestDto.getQuery(),
 //                searchRequestDto.getPageNumber(), searchRequestDto.getSizeOfPage());
-//        List<ProductDto> shareableResult = new LinkedList<>();
-//        for(Product product : result) {
-//            shareableResult.add(getProduct(product));
-//        }
-//        return shareableResult;
-        Page<Product> result = searchService.searchProducts(searchRequestDto.getQuery(),
-                searchRequestDto.getPageNumber(), searchRequestDto.getSizeOfPage());
-        return result;
+//        return result;
     }
 
     private ProductDto getProduct(Product p) {
