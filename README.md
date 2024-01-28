@@ -11,7 +11,7 @@ Assign 3
 2. Create a SelfProductService and SelfCategoryService implementing the corresponding interface
 3. Implement the code inside each of the services. This code should now work with corresponding repositories.
 
-
+sss
 User ----> Auth Server Signup 1
 User ----> Auth Server Login 2 ---> token in return 
 User ----> Resource Server (Product Service) "/products" token
