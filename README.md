@@ -23,7 +23,8 @@ User ----> Resource Server (Product Service) "/products" token
 
 1. When a [product is saved it should be saved in ES as well
 2. When someone searches for product, you return all products where 
-either the title contains that string 
+either the title contains that string
+
 or description contains that string via ElasticSearch
 
 Test Data
