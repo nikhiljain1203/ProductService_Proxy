@@ -42,7 +42,7 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long productId) {
+    public ResponseEntity<ProductDto> getSingleProduct(@PathVariable("id") Long productId) {
         try {
 //            JwtObject authTokenObj = null;
 //            if(authToken != null) {
@@ -62,7 +62,7 @@ public class ProductController {
             if(productId < 1) {
                 throw new IllegalArgumentException("Something went wrong");
             }
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+            ResponseEntity<ProductDto> responseEntity = new ResponseEntity<>(getProductDto(product), HttpStatus.OK);
             return responseEntity;
         } catch (Exception e) {
             //ResponseEntity<Product> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -116,6 +116,15 @@ public class ProductController {
         category.setName(productDto.getCategory());
         product.setCategory(category);
         product.setImageUrl(productDto.getImage());
+        product.setDescription(productDto.getDescription());
+        return product;
+    }
+
+    private ProductDto getProductDto(Product productDto) {
+        ProductDto product = new ProductDto();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
         product.setDescription(productDto.getDescription());
         return product;
     }

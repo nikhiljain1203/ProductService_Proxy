@@ -10,6 +10,7 @@ import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -29,11 +30,14 @@ public class FakeStoreProductService implements IProductService {
 
     private RestTemplateBuilder restTemplateBuilder;
     private FakeStoreClient fakeStoreClient;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
-    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
+    public FakeStoreProductService(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient,
+                                   RedisTemplate<String, Object>  redisTemplate) {
         this.restTemplateBuilder = restTemplateBuilder;
         this.fakeStoreClient = fakeStoreClient;
+        this.redisTemplate = redisTemplate;
     }
 
     private <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod, String url, @Nullable Object request,
@@ -54,7 +58,8 @@ public class FakeStoreProductService implements IProductService {
 //                        .getForEntity("https://fakestoreapi.com/products", ProductDto[].class);
 //
 
-        List<FakeStoreProductDto> fakeStoreProductDtos = fakeStoreClient.getAllProducts();        List<Product> answer = new ArrayList<>();
+        List<FakeStoreProductDto> fakeStoreProductDtos = fakeStoreClient.getAllProducts();
+        List<Product> answer = new ArrayList<>();
 
         for (FakeStoreProductDto productDto: fakeStoreProductDtos) {
             Product product = new Product();
@@ -74,14 +79,19 @@ public class FakeStoreProductService implements IProductService {
     @Override
     public Product getSingleProduct(Long productId ) {
 
-//        RestTemplate restTemplate = restTemplateBuilder.build();
-//        ResponseEntity<FakeStoreProductDto> productDto =
-//                restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
-//                        FakeStoreProductDto.class, productId);
-        //FakeStoreProductDto fs = fakeStoreClient.getSingleProduct(productId);
-       // Product product = getProduct(productDto.getBody());
+        FakeStoreProductDto fs = (FakeStoreProductDto) redisTemplate.opsForHash().get("PRODUCTS", productId);
 
-        return new Product();
+        if(fs == null) {
+
+            RestTemplate restTemplate = restTemplateBuilder.build();
+            ResponseEntity<FakeStoreProductDto> productDto =
+                    restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
+                            FakeStoreProductDto.class, productId);
+            fs = productDto.getBody();
+            redisTemplate.opsForHash().put("PRODUCTS", productId, fs);
+        }
+
+        return getProduct(fs);
     }
 
 //    @Override
