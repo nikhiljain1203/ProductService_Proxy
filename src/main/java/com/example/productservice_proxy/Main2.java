@@ -17,5 +17,6 @@ public class Main2 {
 
         System.out.println(l1.getClass().getName());
         System.out.println(l2.getClass().getName());
+        System.out.println(l2.getClass().getName());
     }
 }
