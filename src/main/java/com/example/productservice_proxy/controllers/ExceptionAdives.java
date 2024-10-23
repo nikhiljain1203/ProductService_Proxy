@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionAdives {
     //@ExceptionHandler({Exception.class})
     public ResponseEntity<String> handleException(Exception e) {
-        return new ResponseEntity<>("Kuch toh phat hai", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
