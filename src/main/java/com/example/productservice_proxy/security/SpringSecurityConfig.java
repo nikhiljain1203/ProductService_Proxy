@@ -23,10 +23,9 @@ public class SpringSecurityConfig {
 //                .formLogin(Customizer.withDefaults());
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/*").permitAll()
+                        .anyRequest().permitAll()
 
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .cors().disable()
                 .csrf().disable();
         return http.build();

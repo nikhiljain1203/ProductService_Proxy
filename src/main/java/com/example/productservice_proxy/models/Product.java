@@ -1,16 +1,17 @@
 package com.example.productservice_proxy.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 
 @Getter
 @Setter
 @Entity
-@Document(indexName = "productservice")
+//@Document(indexName = "productservice")
 public class Product extends BaseModel{
     private String title;
     private double price;
