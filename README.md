@@ -20,7 +20,7 @@ User ----> Resource Server (Product Service) "/products" token
    a) If role matches or not, If yes -- allow else deny
 2) If Token invalid -> deny
 
-
+. 
 1. When a [product is saved it should be saved in ES as well
 2. When someone searches for product, you return all products where 
 either the title contains that string 
