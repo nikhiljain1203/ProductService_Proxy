@@ -41,4 +41,8 @@ public class Calculator {
     public int log10(int a) {
         return (int) Math.log10(a);
     }
+
+    public int abs(int a) {
+        return Math.abs(a);
+    }
 }
