@@ -11,6 +11,7 @@ class CalculatorTest {
     @DisplayName("Testing 1+2 = 3")
     // TEST WHEN THEN
     // TEST_WHENADDTWOINT_THENRETURNINT
+    // TEST
     public void Test_AddTwoInteger_ReturnInteger() {
         //Arrange
         Calculator calculator = new Calculator();
